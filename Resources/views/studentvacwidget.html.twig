@@ -1,0 +1,48 @@
+<div class="box box-danger">
+    <div class="box-header with-border">
+        <h3 class="box-title">Student vacation eligibility</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body no-padding">
+        <table class="table table-hover dataTable" role="grid">
+            <tbody>
+                <tr>
+                    <td>This calculation is based on this website: <a href="https://studentjob.de/blog/5768-was-du-als-werkstudent-uber-deinen-urlaubsanspruch-wissen-musst">Studentenjob.de</a> -> "irregular working times" and full time employees have 24 days at leap in time. The calculation does not yet take take into account the expiration of entitlement. For now, to take your vacation, talk to your supervisor, then register the vacation activity at the date you want with the amount of time. Tip: Keep your maximum tax-free salary per month in mind.</td>
+                </tr>
+                <tr>
+                    <td>This display does not apply to regular employees, it will disappear from your dashboards soon.</td>
+                </tr>
+                <tr>
+                    <td>Time worked (all time)</td>
+                    <td>{{ data.worked }} hours</td>
+                </tr>
+                <tr>
+                    <td>Vacation taken (all time)</td>
+                    <td>{{ data.vacation }} hours</td>
+                </tr>
+                <tr>
+                    <td>Employed since: {{ data.days_working }} days</td>
+                    <td>{{ data.weeks_working }} weeks</td>
+                </tr>
+                <tr>
+                    <td>Calculation formula: {{ data.detailedform }}</td>
+                </tr>
+                <tr>
+                    <td>Calculation result: {{ data.detailedcalc }}</td>
+                </tr>
+                {% if data.cap_explenation %}
+                <tr>
+                    <td><b>{{ data.cap_explenation }}</b></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td><b>Vacation remaining</b></td>
+                    <td>{{ data.vacation_hours }} hours {{ data.vacation_minutes }} minutes</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
