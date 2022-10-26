@@ -66,13 +66,15 @@ class StudentWidget extends SimpleWidget implements UserWidget
     public function calculateVacationAvailable($workingweeks, $worked, $vacation)
     {
         $employee_vac_seconds = 192 * 3600; // 691200;
-        $student_avg_week_s = $worked / $workingweeks;
+        //$student_avg_week_s = $worked / $workingweeks;
         $employee_work_week_s = 40 * 3600; //144000;
         
-        $vacavail = ($employee_vac_seconds * $student_avg_week_s / $employee_work_week_s) - $vacation;
+        $vacperyear = $employee_vac_seconds * ($worked / $workingweeks) / $employee_work_week_s;
         $formustring = "(employee_vacation_seconds x student_avg_week_s / employee_work_week_s) - vacation_taken_s = vacation_available_seconds";
-        $calcstring = sprintf("(%u x (%u / %u) / %u) - %u = %u seconds", $employee_vac_seconds, $worked, $workingweeks, $employee_work_week_s, $vacation, $vacavail);
-        return [$vacavail, $formustring, $calcstring];
+        $calcstring = sprintf("%u x (%u / %.1f) / %u = %u seconds per year -> %.2f hours per year", $employee_vac_seconds, $worked, $workingweeks, $employee_work_week_s, $vacperyear, $vacperyear / 3600);
+        $vacavail = $vacperyear - $vacation;
+        $calcstring2 = sprintf("seconds_per_year - vacation_already_taken = vacation_available -> %u - %u = %u", $vacperyear, $vacation, $vacavail);
+        return [$vacavail, $formustring, $calcstring, $calcstring2];
     }
 
     public function capVacationByMonth($workingdays, $vacavail)
@@ -94,10 +96,8 @@ class StudentWidget extends SimpleWidget implements UserWidget
         $vacation = $this->werksheetrep->getSecondsVacationTaken($user);
         $workingdays = $user->getRegisteredAt()->diff(date_create('now'))->days;
         $workingweeks = round($workingdays / 7, 1);
-        $res = $this->calculateVacationAvailable($workingweeks, $worked, $vacation);
-        $vacavail = $res[0];
-        $formustring = $res[1];
-        $calcstring = $res[2];
+        $calcavail = $this->calculateVacationAvailable($workingweeks, $worked, $vacation);
+        $vacavail = $calcavail[0];
 
         $vacation_capped = $this->capVacationByMonth($workingdays, $vacavail);
         $vachours = floor($vacation_capped / 3600);
@@ -116,8 +116,7 @@ class StudentWidget extends SimpleWidget implements UserWidget
             'weeks_working' => $workingweeks,
             'vacation_hours' => $vachours,
             'vacation_minutes' => $vacminutes,
-            'detailedform' => $formustring,
-            'detailedcalc' => $calcstring,
+            'detailedcalc' => $calcavail,
             'cap_explenation' => $vac_cap_exp
         ];
     }

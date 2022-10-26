@@ -28,10 +28,13 @@
                     <td>{{ data.weeks_working }} weeks</td>
                 </tr>
                 <tr>
-                    <td>Calculation formula: {{ data.detailedform }}</td>
+                    <td>Calculation formula: {{ data.detailedcalc[1] }}</td>
                 </tr>
                 <tr>
-                    <td>Calculation result: {{ data.detailedcalc }}</td>
+                    <td>Calculation per year: {{ data.detailedcalc[2] }}</td>
+                </tr>
+                <tr>
+                    <td>Calculation remaining: {{ data.detailedcalc[3] }}</td>
                 </tr>
                 {% if data.cap_explenation %}
                 <tr>
@@ -40,7 +43,7 @@
                 {% endif %}
                 <tr>
                     <td><b>Vacation remaining</b></td>
-                    <td>{{ data.vacation_hours }} hours {{ data.vacation_minutes }} minutes</td>
+                    <td><b>{{ data.vacation_hours }}:{{ data.vacation_minutes }} h<b></td>
                 </tr>
             </tbody>
         </table>
