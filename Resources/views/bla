@@ -1,0 +1,22 @@
+            <tr>
+                <td nowrap class="first text-nowrap" style="padding: 2px;">{{ entry.begin|format_datetime(pattern="EEEEEE", locale="de") }}</td>
+                <td nowrap class="first text-nowrap" style="padding: 2px;">{{ entry.begin|format_datetime(pattern="dd.MM", locale="de") }}</td>
+                {# Print Buchung & Anmerkung depending on type of Activity #}
+                {% if entry.activity.name == "Public Holiday" %}
+                    {% set feiertage = feiertage + 1 %}
+                    <td nowrap class="text-nowrap" style="padding: 2px;">{{ entry.duration|duration(isDecimal) }}</td>
+                    <td contenteditable="true" style="padding: 2px;">{{ entry.description|replace({'[DEU_hessen]': ''})|nl2br }}</td>
+                {% elseif entry.activity.name == "Urlaub" %}
+                    <td nowrap class="text-nowrap" style="padding: 2px;">{{ entry.duration|duration(isDecimal) }}</td>
+                    <td contenteditable="true" style="padding: 2px;">Urlaub</td>
+                {% set urlaubstage = urlaubstage + 1 %}
+                {% else %}
+                    <td nowrap class="text-nowrap" style="padding: 2px;">Ko {{ entry.begin|time }} Ge {{ entry.end|time }}</td>
+                    <td contenteditable="true" style="padding: 2px;"></td>
+                    {#{ entry.activity.name }} / {{ entry.project.name }#}
+                {% endif %}
+                {% set saldo = entry.duration - daysoll %}
+                <td nowrap class="text-nowrap text-right" style="padding: 2px;">{{ daysoll|duration(isDecimal) }}</td>
+                <td nowrap class="text-nowrap text-right" style="padding: 2px;">{{ entry.duration|duration(isDecimal) }}</td>
+                <td nowrap class="text-nowrap text-right" style="padding: 2px;">{{ saldo|duration(isDecimal) }}</td>
+            </tr>

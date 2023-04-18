@@ -1,0 +1,36 @@
+<tr class="{{ tr_class }}">
+    <td style="padding: 2px;">{{ day }}</td> 
+    <td style="padding: 2px;">{{ date }}</td> 
+    <td style="padding: 2px;">{{ booking }}</td>
+    <td style="padding: 2px;">{{ comment }}</td>
+
+    {% if soll != "" %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;">{{ soll|duration(isDecimal) }}</td>
+    {% else %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;"></td>
+    {% endif %}
+
+    {% if duration != "" %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;">{{ duration|duration(isDecimal) }}</td>
+    {% else %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;"></td>
+    {% endif %}
+
+    {% if pause != "" %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;">{{ pause|duration(isDecimal) }}</td>
+    {% else %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;"></td>
+    {% endif %}
+
+    {% if saldo != "" %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;">{{ saldo|duration(isDecimal) }}</td>
+    {% else %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;"></td>
+    {% endif %}
+
+    {% if flex != "" %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;">{{ flex|duration(isDecimal) }}</td>
+    {% else %}
+    <td nowrap class="text-nowrap text-right" style="padding: 2px;"></td>
+    {% endif %}
+</tr>

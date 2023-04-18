@@ -27,7 +27,7 @@ class DashboardSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            DashboardEvent::class => ['onDashboardEvent', 90],
+            //DashboardEvent::class => ['onDashboardEvent', 90],
         ];
     }
 
